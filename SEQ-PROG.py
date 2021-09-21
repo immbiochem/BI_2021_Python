@@ -4,69 +4,147 @@
 # In[9]:
 
 
-peremen = True #для бесконечного цикла
-while peremen == True:
-    interact1 = input("Enter your comand:") #для общения с пользователем
+varios = True #для бесконечного цикла
+while varios == True:
+    interact1 = input("Enter your command:") #для общения с пользователем
     if interact1 == "exit":
-        peremen = False
-        print("OK, that's all") #тут завершаем цикл
+        varios = False
+        print("OK, that's all") #тут завершаем цикл при команде exit
         break
+    elif interact1 != "transcribe" or interact1 != "reverse" or interact1 != "complement" or interact1 != "reverse complement":
+        print("I don't know this command")
     else:
         interact2 = input("Enter your seq:") #исходная строка 
         lis = [] #рабочая лошадь для анализа последовательности, перепечатываем строку в лист
         for line in interact2:
             lis+=[line]
-        #print(lis) - напечатать код если нужно
-        if "u" in interact2.lower() and "t" in interact2.lower(): #проверяем исходную строку на наличие реципроктных символов
-            print("You have a Francenshtain-molecule, please, write normal seq") # t и u не могут быть вместе
-        else:
-            if "t" in interact2.lower() and interact1 == "transcribe": #транскрипция может быть только для ДНК, поэтому проверяем наличие t
-                lis1 = [] #тут будет транскрипт как лист1
-                for i in lis: #цикл используем для переработки транскрипта
-                    if i == 'a':
-                        lis1+='t'
-                    if i == 't':
-                        lis1+='a'
-                    if i == 'g':
-                        lis1+='c'
-                    if i == 'c':
-                        lis1+='g'
-                print(lis1) #печатаем транскрипт
+            
+        #проведем проверку, является ли последовательность нуклеиновой кислотой
+        condition = 0
+        for i in lis:
+            if i == 'a':
+                continue
+            elif i == 't':
+                continue
+            elif i == 'g':
+                continue
+            elif i == 'c':
+                continue
+            elif i == 'u':
+                continue
             else:
-                if interact1 == "reverse": #действия для команды reverse
-                    print("This is reversive seq: ")
-                    for i in lis[::-1]:
-                        print(i, end="") #в цикле выводим перевернутую последовательность
-                else:
-                    if interact1 == "complement" and "t" in interact2.lower(): #проверка для команды complement на ДНК-овость
-                        lis2 = [] #тут будет комплементарная последовательность для ДНК
-                        for i in lis: #цикл 
-                            if i == 'a':
-                                lis2+='t'
-                            if i == 't':
-                                lis2+='a'
-                            if i == 'g':
-                                lis2+='c'
-                            if i == 'c':
-                                lis2+='g'
-                        print("This is the complement seq: ")
-                        for i in lis2:
-                            print(i, end="") #в цикле выводим комплементарную последовательность ДНК
-                    else:
-                        if interact1 == "complement" and "u" in interact2.lower(): #проверка для команды complement на РНК-овость
-                            lis3 = [] #тут будет комплементарная последовательность для РНК
-                            for i in lis: #цикл 
-                                if i == 'a':
-                                    lis3+='u'
-                                if i == 'u':
-                                    lis3+='a'
-                                if i == 'g':
-                                    lis3+='c'
-                                if i == 'c':
-                                    lis3+='g'
-                            print("This is the complement seq: ")
-                            for i in lis3:
-                                print(i, end="") #в цикле выводим комплементарную последовательность РНК
+                condition = 1
+                break
+        if condition == 1:
+            print("This isn't nucleic acid")
+            continue
+        elif 'u' in interact2.lower() and 't' in interact2.lower(): #проверка u и t в одной строке
+            print("This is a normal RNA or DNA!")
+            continue
+            
+        #определим тип молекулы
+        
+        if 'u' in interact2:
+            molecul = "RNA"
+        else:
+            molecul = "DNA"
+            
+        #команда для обратной последовательности
+        
+        if interact1 == "reverse": 
+            print("Your reverse seq: ")
+            for i in lis[::-1]:
+                print(i, end="")
+            print()
+            
+        #команда для транскрипции
+        
+        elif interact1 == "transcribe": 
+            if molecul == "DNA": #ДНК транскрибируется
+                lis2 = []
+                for i in lis:
+                    if i == 'a':
+                        lis2+='u'
+                    if i == 't':
+                        lis2+='a'
+                    if i == 'c':
+                        lis2+='g'
+                    if i == 'g':
+                        lis2+='c'
+                print("Your transcript: ")
+                for i in lis2:
+                    print(i, end="")
+                print()
+            else:
+                print("This isn't transcribed!") #РНК транслируется
+                
+        #команда для complement seq
+                
+        elif interact1 == "complement": 
+            if molecul == "DNA": #если ДНК, то циклом выводит комплементарную последовательность ДНК
+                lis3 = []
+                for i in lis:
+                    if i == 'a':
+                        lis3+='t'
+                    if i == 't':
+                        lis3+='a'
+                    if i == 'c':
+                        lis3+='g'
+                    if i == 'g':
+                        lis3+='c'
+                print("Your complement DNA-seq: ")
+                for i in lis3:
+                    print(i, end="")
+                print()
+            else: #если РНК, то циклом выводит комплементарную последовательность РНК
+                lis3 = []
+                for i in lis:
+                    if i == 'a':
+                        lis3+='u'
+                    if i == 'u':
+                        lis3+='a'
+                    if i == 'c':
+                        lis3+='g'
+                    if i == 'g':
+                        lis3+='c'
+                print("Your complement RNA-seq: ")
+                for i in lis3:
+                    print(i, end="")
+                print()
+        
+        #команда для reverse complement seq
+        
+        elif interact1 == "reverse complement": 
+            if molecul == "DNA": #если ДНК, то циклом выводит обратную комплементарную последовательность ДНК
+                lis3 = []
+                for i in lis:
+                    if i == 'a':
+                        lis3+='t'
+                    if i == 't':
+                        lis3+='a'
+                    if i == 'c':
+                        lis3+='g'
+                    if i == 'g':
+                        lis3+='c'
+                print("Your reverse complement DNA-seq: ")
+                for i in lis3[::-1]:
+                    print(i, end="")
+                print()
+            else: #если РНК, то циклом выводит обратную комплементарную последовательность РНК
+                lis3 = []
+                for i in lis:
+                    if i == 'a':
+                        lis3+='u'
+                    if i == 'u':
+                        lis3+='a'
+                    if i == 'c':
+                        lis3+='g'
+                    if i == 'g':
+                        lis3+='c'
+                print("Your reverse complement RNA-seq: ")
+                for i in lis3[::-1]:
+                    print(i, end="")
+                print()
                             
                         
                 
