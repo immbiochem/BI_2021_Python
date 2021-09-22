@@ -11,7 +11,7 @@ while varios == True:
         varios = False
         print("OK, that's all") #тут завершаем цикл при команде exit
         break
-    elif interact1 != "transcribe" or interact1 != "reverse" or interact1 != "complement" or interact1 != "reverse complement":
+    elif interact1 != "transcribe" and interact1 != "reverse" and interact1 != "complement" and interact1 != "reverse complement":
         print("I don't know this command")
     else:
         interact2 = input("Enter your seq:") #исходная строка 
@@ -22,6 +22,7 @@ while varios == True:
         #проведем проверку, является ли последовательность нуклеиновой кислотой
         condition = 0
         for i in lis:
+            #для малых букв
             if i == 'a':
                 continue
             elif i == 't':
@@ -32,6 +33,19 @@ while varios == True:
                 continue
             elif i == 'u':
                 continue
+                
+              #для больших букв  
+            elif i == 'T':
+                continue
+            elif i == 'G':
+                continue
+            elif i == 'C':
+                continue
+            elif i == 'U':
+                continue
+            elif i == 'A':
+                continue
+                
             else:
                 condition = 1
                 break
@@ -39,12 +53,12 @@ while varios == True:
             print("This isn't nucleic acid")
             continue
         elif 'u' in interact2.lower() and 't' in interact2.lower(): #проверка u и t в одной строке
-            print("This is a normal RNA or DNA!")
+            print("This isn't a normal RNA or DNA!") #в норме их вместе быть не должно
             continue
             
         #определим тип молекулы
         
-        if 'u' in interact2:
+        if 'u' in interact2.lower():
             molecul = "RNA"
         else:
             molecul = "DNA"
@@ -63,6 +77,7 @@ while varios == True:
             if molecul == "DNA": #ДНК транскрибируется
                 lis2 = []
                 for i in lis:
+                    #для малых букв
                     if i == 'a':
                         lis2+='u'
                     if i == 't':
@@ -71,12 +86,22 @@ while varios == True:
                         lis2+='g'
                     if i == 'g':
                         lis2+='c'
-                print("Your transcript: ")
+                    #для больших букв
+                    if i == 'A':
+                        lis2+='U'
+                    if i == 'T':
+                        lis2+='A'
+                    if i == 'C':
+                        lis2+='G'
+                    if i == 'G':
+                        lis2+='C'
+                        
+                print("Your transcript: ") #Выводим результат
                 for i in lis2:
                     print(i, end="")
                 print()
             else:
-                print("This isn't transcribed!") #РНК транслируется
+                print("This isn't transcribed!") #РНК транслируется, не транскрибируется
                 
         #команда для complement seq
                 
@@ -84,6 +109,7 @@ while varios == True:
             if molecul == "DNA": #если ДНК, то циклом выводит комплементарную последовательность ДНК
                 lis3 = []
                 for i in lis:
+                    #для малых букв
                     if i == 'a':
                         lis3+='t'
                     if i == 't':
@@ -92,6 +118,15 @@ while varios == True:
                         lis3+='g'
                     if i == 'g':
                         lis3+='c'
+                    #для больших букв
+                    if i == 'A':
+                        lis3+='T'
+                    if i == 'T':
+                        lis3+='A'
+                    if i == 'C':
+                        lis3+='G'
+                    if i == 'G':
+                        lis3+='C'
                 print("Your complement DNA-seq: ")
                 for i in lis3:
                     print(i, end="")
@@ -99,6 +134,7 @@ while varios == True:
             else: #если РНК, то циклом выводит комплементарную последовательность РНК
                 lis3 = []
                 for i in lis:
+                    #для малых букв
                     if i == 'a':
                         lis3+='u'
                     if i == 'u':
@@ -107,6 +143,15 @@ while varios == True:
                         lis3+='g'
                     if i == 'g':
                         lis3+='c'
+                    #для больших букв
+                    if i == 'A':
+                        lis3+='U'
+                    if i == 'U':
+                        lis3+='A'
+                    if i == 'C':
+                        lis3+='G'
+                    if i == 'G':
+                        lis3+='C'
                 print("Your complement RNA-seq: ")
                 for i in lis3:
                     print(i, end="")
@@ -118,6 +163,7 @@ while varios == True:
             if molecul == "DNA": #если ДНК, то циклом выводит обратную комплементарную последовательность ДНК
                 lis3 = []
                 for i in lis:
+                    #для малых букв
                     if i == 'a':
                         lis3+='t'
                     if i == 't':
@@ -126,6 +172,15 @@ while varios == True:
                         lis3+='g'
                     if i == 'g':
                         lis3+='c'
+                    #для больших букв
+                    if i == 'A':
+                        lis3+='T'
+                    if i == 'T':
+                        lis3+='A'
+                    if i == 'C':
+                        lis3+='G'
+                    if i == 'G':
+                        lis3+='C'
                 print("Your reverse complement DNA-seq: ")
                 for i in lis3[::-1]:
                     print(i, end="")
@@ -133,6 +188,7 @@ while varios == True:
             else: #если РНК, то циклом выводит обратную комплементарную последовательность РНК
                 lis3 = []
                 for i in lis:
+                    #для малых букв
                     if i == 'a':
                         lis3+='u'
                     if i == 'u':
@@ -141,6 +197,15 @@ while varios == True:
                         lis3+='g'
                     if i == 'g':
                         lis3+='c'
+                    #для больших букв
+                    if i == 'A':
+                        lis3+='U'
+                    if i == 'U':
+                        lis3+='A'
+                    if i == 'C':
+                        lis3+='G'
+                    if i == 'G':
+                        lis3+='C'
                 print("Your reverse complement RNA-seq: ")
                 for i in lis3[::-1]:
                     print(i, end="")
