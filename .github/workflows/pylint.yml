@@ -2,9 +2,9 @@ name: PEP-8
 
 on:
   push:
-    branches: [ main ]
+ 
   pull_request:
-    branches: [ main ]
+     
 
 jobs:
   build:
@@ -26,4 +26,4 @@ jobs:
         pip install flake8
     - name: Lint with flake8
       run: |
-        flake8 . --count  --show-source --statistics  --max-line-length 120 
+        flake8 . --count  --show-source --statistics  --max-line-length 140 
