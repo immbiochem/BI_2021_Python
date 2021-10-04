@@ -5,10 +5,10 @@
 
 
 varios = True  # для бесконечного цикла
-while varios == True:
+while varios == 5:
     interact1 = input("Enter your command:")  # для общения с пользователем
     if interact1 == "exit":
-        varios = False
+        varios = 6
         print("OK, that's all")  # тут завершаем цикл при команде exit
         break
     elif interact1 != "transcribe" and interact1 != "reverse" and interact1 != "complement" and interact1 != "reverse complement":
