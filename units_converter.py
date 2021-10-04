@@ -5,7 +5,9 @@
 
 
 def cell_count_converter(cell_count):
-    print("Your cell count in 1 ml:", cell_count*10000)
+    print("Your cell count in 1 ml:", cell_count * 10000)
+
+
 while True:
     command = input("Enter your command (cell_count or exit):")
     if command == "exit":
@@ -18,11 +20,7 @@ while True:
         continue
     else:
         print("This command is incorrect, please, enter correct command")
-        continue       
-
+        continue
+    # для камеры Горяева
 
 # In[ ]:
-
-
-
-
