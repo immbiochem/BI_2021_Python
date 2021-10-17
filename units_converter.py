@@ -15,9 +15,13 @@ while True:
         break
     elif command == "cell_count":
         cell_in_chamber = int(input("Enter the number of cells in 25 large squares of Goryaev's chamber:"))
-        cell_count_converter(cell_in_chamber)
-        print("Next step")
-        continue
+        if cell_in_chamber >= 0:
+            cell_count_converter(cell_in_chamber)
+            print("Next step")
+            continue
+        else:
+            print("The number of cells cannot be less than zero")
+            continue
     else:
         print("This command is incorrect, please, enter correct command")
         continue
