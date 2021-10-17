@@ -25,6 +25,6 @@ while True:
     else:
         print("This command is incorrect, please, enter correct command")
         continue
-    # для счетной камеры Горяева 
+    # для счетной камеры Горяева.
 
 # In[ ]:
