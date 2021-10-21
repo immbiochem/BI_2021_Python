@@ -3,29 +3,27 @@
 
 # In[ ]:
 
+# MAIN
 
-
-#MAIN
-
-
-input_fastq = str(input("Введите аргумент input_fastq: "))
-output_file_prefix = str(input("Введите аргумент output_file_prefix: "))
-prefix_filtered = "_passed.fastq"
-prefix_failure = "_failed.fastq"
+input_fastq = eval(input("Введите аргумент input_fastq: "))
+output_file_prefix = eval(input("Введите аргумент output_file_prefix: "))
 quality_threshold = int(input("Введите аргумент quality_threshold: "))
 gc_bounds = [int(i) for i in input("Введите аргумент gc_bounds: ").split()]
 length_bounds = [int(i) for i in input("Введите аргумент length_bounds: ").split()]
 save_filtered = input("Введите аргумент save_filtered: ")
+prefix_filtered = "_passed.fastq"
+prefix_failure = "_failed.fastq"
 
 
-def gc_bounds1(up=100, lo=0):
+def gc_bounds1(up=100, lo=0, SEQ=[]):
+    print(up, lo)
     if up > lo:
         up_broad = up  # верхняя граница
         low_broad = lo  # нижняя граница
     else:
         up_broad = lo  # верхняя граница
         low_broad = up  # нижняя граница
-    numbers_of_reads = []  
+    numbers_of_reads = []
     counter = 0
     for i in SEQ[0::2]:  # ЗДЕСЬ ИСХОДНЫЕ ДАННЫЕ УЖЕ ПЕРЕПИСАНЫ КАК k
         counter += 1
@@ -35,7 +33,7 @@ def gc_bounds1(up=100, lo=0):
     return (numbers_of_reads)
 
 
-def length_bounds1(up=2 ** 32, lo=0):
+def length_bounds1(up=2 ** 32, lo=0, seq_and_numbers=[], gc_filter=[]):
     if up > lo:
         up_broad = up  # верхняя граница
         low_broad = lo  # нижняя граница
@@ -83,17 +81,14 @@ def SANQ_f(SEQ):
     return (seq_and_numbers_qual)
 
 
-def quality_threshold1(n=0):
-    # filtered_reads_quality_threshold = []
+def quality_threshold1(n=0, seq_and_numbers_qual=[], length_filter=[]):
     filter_qual = []
     for i in length_filter:  # выбираем строки с предыдущих фильтраций
         mean = 0
         for j in seq_and_numbers_qual[i]:
             mean += ord(j) - 33  # сумма для строки
-        if mean / len(seq_and_numbers_qual[i]) > n:  # среднее для строки как условие фильтрации
-            # filtered_reads_quality_threshold += [i]
+        if int(mean / len(seq_and_numbers_qual[i])) > n:  # среднее для строки как условие фильтрации
             filter_qual += [i]
-            # return(filtered_reads_quality_threshold)
     return (filter_qual)
 
 
@@ -128,12 +123,15 @@ def FILTRED_FASTQ1(input_fastq, list_of_numbers_for_filtered_reads):
             continue
     # СОЕДИНИМ ВСЕ ФИЛЬТРОВАННЫЕ РИДЫ:
     FILTRED_FASTQ = []
-    for i in list_of_numbers_for_filtered_reads:
-        FILTRED_FASTQ += [ind[i]]
-        FILTRED_FASTQ += [seq[i]]
-        FILTRED_FASTQ += [third[i]]
-        FILTRED_FASTQ += [qual[i]]
-    return (FILTRED_FASTQ)
+    if len(list_of_numbers_for_filtered_reads) > 0:
+        for i in list_of_numbers_for_filtered_reads:
+            FILTRED_FASTQ += [ind[i - 1]]
+            FILTRED_FASTQ += [seq[i - 1]]
+            FILTRED_FASTQ += [third[i - 1]]
+            FILTRED_FASTQ += [qual[i - 1]]
+        return (FILTRED_FASTQ)
+    else:
+        return (FILTRED_FASTQ)
 
 
 def writer(output_file_prefix, prefix_filtered, FILTRED_FASTQ):
@@ -199,7 +197,7 @@ def main(input_fastq, output_file_prefix, gc_bounds, length_bounds, quality_thre
     seq_and_numbers_qual = SANQ_f(
         SEQ)  # ПРЕДПОДГОТОВКА 2 получаем срезы последовательностей с помощью шагов - у последовательностей код = 0, у качества = 1
 
-    # 2 STEP >> gc_bounds
+    # 2 STEP >> gc_bounds1
     if len(gc_bounds) == 2:
         up_gc = gc_bounds[0]
         lo_gc = gc_bounds[1]
@@ -210,9 +208,9 @@ def main(input_fastq, output_file_prefix, gc_bounds, length_bounds, quality_thre
         up_gc = 100
         lo_gc = 0
     # переменная
-    gc_filter = gc_bounds1(up_gc, lo_gc)
+    gc_filter = gc_bounds1(up_gc, lo_gc, SEQ)
 
-    # 3 STEP >>> length_bounds
+    # 3 STEP >>> length_bounds1
     if len(length_bounds) == 2:
         up_lb = length_bounds[0]
         lo_lb = length_bounds[1]
@@ -220,13 +218,20 @@ def main(input_fastq, output_file_prefix, gc_bounds, length_bounds, quality_thre
         up_lb = length_bounds[0]
         lo_lb = 0
     else:
-        up_lb = 100
+        up_lb = 2 ** 32
         lo_lb = 0
     # переменная
-    length_filter = length_bounds1(up_lb, lo_lb)
+    length_filter = length_bounds1(up_lb, lo_lb, seq_and_numbers, gc_filter)
 
-    # 4 STEP >>>> quality_threshold
-    list_of_numbers_for_filtered_reads = quality_threshold1(quality_threshold)  # масло масленное -_-
+    # 4 STEP >>>> quality_threshold1
+    if type(quality_threshold) == str:
+        n = 0
+        list_of_numbers_for_filtered_reads = quality_threshold1(n, seq_and_numbers_qual,
+                                                                length_filter)  # масло масленное -_-
+    else:
+        n = quality_threshold
+        list_of_numbers_for_filtered_reads = quality_threshold1(n, seq_and_numbers_qual,
+                                                                length_filter)  # масло масленное -_-
 
     # 5 STEP ЗАПИСЬ В ФАЙЛ
     FILTRED_FASTQ = FILTRED_FASTQ1(input_fastq, list_of_numbers_for_filtered_reads)
