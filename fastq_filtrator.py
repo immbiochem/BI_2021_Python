@@ -14,7 +14,7 @@ save_filtered = input("Введите аргумент save_filtered: ")
 prefix_filtered = "_passed.fastq"
 prefix_failure = "_failed.fastq"
 
-def gc_bounds1(up=100, lo=0, SEQ=list(0)):
+def gc_bounds1(up=100, lo=0, SEQ=[]):
     if up > lo:
         up_broad = up # верхняя граница
         low_broad = lo # нижняя граница
@@ -74,7 +74,7 @@ def SANQ_f(SEQ):
         seq_and_numbers_qual[counter] = i
     return(seq_and_numbers_qual)
 
-def quality_threshold1(n=0, seq_and_numbers_qual = 0, length_filter = list(0)):
+def quality_threshold1(n=0, seq_and_numbers_qual = 0, length_filter = []):
     filter_qual = []
     for i in length_filter: # выбираем строки с предыдущих фильтраций
         mean = 0
@@ -176,7 +176,7 @@ def dop(save_filtered, list_of_numbers_for_filtered_reads, output_file_prefix, p
             FAILED_READS += [seq[i]]
             FAILED_READS += [third[i]]
             FAILED_READS += [qual[i]]    
-        print("Длинна списка ридов, непрошедших фильтрацию", len(FAILED_READS))
+        print("Длинна списка ридов, непрошедших фильтрацию", len(FAILED_READS)/4)
         # ЗАПИШЕМ В ФАЙЛ _failed.fastq    
         with open(output_file_prefix + prefix_failure, 'w') as ouf:
             for line in FAILED_READS:
@@ -193,10 +193,10 @@ def main(input_fastq, output_file_prefix, gc_bounds, length_bounds, quality_thre
 
     #2 STEP >> gc_bounds1
     if len(gc_bounds) == 2:
-        up_gc = gc_bounds[0]
-        lo_gc = gc_bounds[1]
+        up_gc = int(gc_bounds[0])
+        lo_gc = int(gc_bounds[1])
     elif len(gc_bounds) == 1:
-        up_gc = gc_bounds[0]
+        up_gc = int(gc_bounds[0])
         lo_gc = 0
     else:
         up_gc = 100
@@ -207,10 +207,10 @@ def main(input_fastq, output_file_prefix, gc_bounds, length_bounds, quality_thre
 
     # 3 STEP >>> length_bounds1
     if len(length_bounds) == 2:
-        up_lb = length_bounds[0]
-        lo_lb = length_bounds[1]
+        up_lb = int(length_bounds[0])
+        lo_lb = int(length_bounds[1])
     elif len(length_bounds) == 1:
-        up_lb = length_bounds[0]
+        up_lb = int(length_bounds[0])
         lo_lb = 0
     else:
         up_lb = 2**32
