@@ -15,20 +15,7 @@ ar3 = np.zeros(3) + ar1
 # Create matrix_multiplication
 def matrix_multiplication(a, b):
     if a.shape[1] == b.shape[0]:
-        a_col = a.shape[1]
-        a_row = a.shape[0]
-        b_col = b.shape[1]
-        c = []
-        for i in range(a_row):
-            g = []
-            for j in range(b_col):
-                p = 0
-                for n in range(a_col):
-                    t = a[i][n] * b[n][j]
-                    p += t
-                g += [p]
-            c += [g]
-        return np.array(c)
+        return np.dot(a, b)
     else:
         print('Parameters are not suitable for multiplication')
         return None
@@ -52,10 +39,10 @@ def multiplication_check(matrix_list):
 # Create multiply_matrices
 def multiply_matrices(a):
     if multiplication_check(a):
-        c = a[0]
+        x = a[0]
         for i in a[1:]:
-            c = matrix_multiplication(c, i)
-            return c
+            x = np.dot(x, i)
+        return x
     else:
         return None
 
