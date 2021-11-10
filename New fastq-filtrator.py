@@ -80,7 +80,7 @@ def quality_threshold_function(fastq_dict, keys, n=0):
         mean = 0
         for j in fastq_dict[i][2]:
             mean += ord(j) - 33  # amount for string
-        if int(mean / len(fastq_dict[i][2])) > n:  # average for a row as a filtering condition
+        if int(mean / len(fastq_dict[i][2])) > n:  # average for the row as a filtering condition
             filter_qual += [i]
     return filter_qual
 
@@ -114,7 +114,7 @@ def main(input_fastq, output_file_prefix, gc_bounds, length_bounds, quality_thre
         gc_keys = gc_bounds_function(fast_dict, fast_keys, up=int(gc_bounds[0]), lo=int(gc_bounds[1]))
     print("The number of reads filtered by GC: ", len(gc_keys))
 
-    # filter by length    
+    # filter by length
     if len(length_bounds) == 0:
         len_keys = length_bounds_function(fast_dict, gc_keys)
     elif len(length_bounds) == 1:
@@ -130,16 +130,16 @@ def main(input_fastq, output_file_prefix, gc_bounds, length_bounds, quality_thre
         qual_keys = quality_threshold_function(fast_dict, len_keys, n=int(quality_threshold[0]))
     print("Number of reads filtered by quality: ", len(qual_keys))
 
-    # write the results to a file                                       
+    # write the results to a file
     writer(output_file_prefix, "_passed.fastq", fast_dict, qual_keys)
     print("Passed file is written")
 
-    # additional option                                      
+    # additional option
     if save_filtered == "True":
         dop(output_file_prefix, "_failed.fastq", fast_dict, qual_keys)
         print("Failed file is written")
 
-    # successful completion of work                                      
+    # successful completion of work
     print("Work done")
 
 
