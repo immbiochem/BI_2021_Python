@@ -9,7 +9,11 @@ output_prefix = input("Enter file output prefix: ")
 gc = [i for i in input("Enter GC threshold: ").split()]
 length = [i for i in input("Enter length threshold: ").split()]
 quality = [i for i in input("Enter quality threshold: ").split()]
-save = input("Do you want to save failed reads (True/False)?: ")
+presave = input("Do you want to save failed reads (True/False)?: ")
+if presave == "True":
+    save = True
+else:
+    save = False
 
 
 def get_fastq_dictionary(path):
@@ -47,15 +51,15 @@ def get_fastq_dictionary(path):
 def gc_bounds_function(fastq_dict, fastq_keys, up=100, lo=0):
     if up > lo:
         up_broad = up  # upper bound
-        low_broad = lo  # нижняя граница
+        low_broad = lo  # lower bound
     else:
         up_broad = lo  # upper bound
-        low_broad = up  # нижняя граница
-    gc_filtered_keys = []  # список фильтрованных ключей
+        low_broad = up  # lower bound
+    gc_filtered_keys = []  # list of filtered keys
     for i in fastq_keys:
         number_of_gc = (fastq_dict[i][0].count("G") + fastq_dict[i][0].count("C")) * 100 / len(
-            fastq_dict[i][0])  # подсчет количества GC% для строки
-        if low_broad < number_of_gc < up_broad:  # условия фильтрации по границам
+            fastq_dict[i][0])  # counting the number of GC% for a string
+        if low_broad <= number_of_gc <= up_broad:  # boundary filtering conditions
             gc_filtered_keys.append(i)
     return gc_filtered_keys
 
@@ -69,7 +73,7 @@ def length_bounds_function(fastq_dict, keys, up=2 ** 32, lo=0):
         low_broad = up  # lower bound
     length_filter = []
     for i in keys:
-        if up_broad > len(fastq_dict[i][0]) > low_broad:  # boundary filtering conditions
+        if up_broad >= len(fastq_dict[i][0]) >= low_broad:  # boundary filtering conditions
             length_filter += [i]
     return length_filter
 
@@ -80,7 +84,7 @@ def quality_threshold_function(fastq_dict, keys, n=0):
         mean = 0
         for j in fastq_dict[i][2]:
             mean += ord(j) - 33  # amount for string
-        if int(mean / len(fastq_dict[i][2])) > n:  # average for the row as a filtering condition
+        if mean / len(fastq_dict[i][2]) >= n:  # average for the row as a filtering condition
             filter_qual += [i]
     return filter_qual
 
@@ -100,7 +104,7 @@ def dop(output_file_prefix, prefix_failure, fastq_dict, keys):
     writer(output_file_prefix, prefix_failure, fastq_dict, keys_resid)
 
 
-def main(input_fastq, output_file_prefix, gc_bounds, length_bounds, quality_threshold, save_filtered="False"):
+def main(input_fastq, output_file_prefix, gc_bounds, length_bounds, quality_threshold, save_filtered=False):
     # create dictionary and list of keys
     fast_dict, fast_keys = get_fastq_dictionary(input_fastq)
     print("Total number of reads: ", len(fast_keys))
@@ -135,7 +139,7 @@ def main(input_fastq, output_file_prefix, gc_bounds, length_bounds, quality_thre
     print("Passed file is written")
 
     # additional option
-    if save_filtered == "True":
+    if save_filtered:
         dop(output_file_prefix, "_failed.fastq", fast_dict, qual_keys)
         print("Failed file is written")
 
