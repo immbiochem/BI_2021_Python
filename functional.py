@@ -6,7 +6,7 @@
 
 def sequential_map(*args):
     box = args[-1]
-    for func in args[:len(args) - 1]:
+    for func in args[:- 1]:
         transformed_box = list(map(func, box))
         box = transformed_box
     return box
