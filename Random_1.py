@@ -28,7 +28,7 @@ for i in range(1000):
     start = timeit.default_timer()
     np.random.uniform(size=i + 1)
     stop = timeit.default_timer()
-    time_for_np_random[i] = round(stop - start, 5)
+    time_for_np_random[i] = stop - start
 
 # Common graph
 fig_dims = (14, 8)
@@ -118,14 +118,15 @@ plt.grid()
 
 n = 1000
 x, y = np.zeros(n), np.zeros(n)
-for i in range(n):
-    x[i], y[i] = np.random.uniform(-100, 100, 2)
-x[0], y[0] = 0, 0
+act = [1, -1]
+for i in range(1, n):
+    x[i], y[i] = x[i-1] + random.choice(act), y[i-1] + random.choice(act)
+param = max([max(abs(x)), max(abs(y))]) + 5
 fig_dims = (10, 8)
 fig, axes = plt.subplots(figsize=fig_dims)
-plt.scatter(x, y, color="g")
-axes.vlines(0, -100, 100, color='r')
-axes.hlines(0, -100, 100, color='r')
+plt.plot(x, y, color="g")
+axes.vlines(0, -param, param, color = 'r')
+axes.hlines(0, -param, param, color = 'r')
 plt.grid()
 
 # TASK 4
