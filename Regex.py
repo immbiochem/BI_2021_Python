@@ -4,22 +4,24 @@
 # In[ ]:
 
 
-# 1)
 import re
+import pandas as pd
+import seaborn as sns
 
+# 1)
 exp = re.compile('ftp\.[\w\.\/\#]+[^;\s]')
 file = []
-with open(r'C:\Users\pfft\OneDrive\Рабочий стол\БИ\Python\references.txt', 'r') as text:
+with open(r'.\references.txt', 'r') as text:
     for line in text:
         file += re.findall(exp, line.strip())
-with open(r'C:\Users\pfft\OneDrive\Рабочий стол\БИ\Python\ftps.txt', 'w') as output:
+with open(r'.\ftps.txt', 'w') as output:
     for link in file:
         output.write(link + '\n')
 
 # 2)
 exp = re.compile('\d+\.?\d*')
 numeric = []
-with open(r'C:\Users\pfft\OneDrive\Рабочий стол\БИ\Python\2430AD.txt', 'r') as text:
+with open(r'.\2430AD.txt', 'r') as text:
     for line in text:
         numeric += re.findall(exp, line.strip())
 # print(numeric) ['2430', '1969', '2430', '2430', '57', '57', '1970', '3.68', '35', '460', '2430']
@@ -28,7 +30,7 @@ with open(r'C:\Users\pfft\OneDrive\Рабочий стол\БИ\Python\2430AD.tx
 # 3)
 exp = re.compile('[B-Zb-z]*a+\-*[A-Za-z]*', re.IGNORECASE)
 list_of_a_words = []
-with open(r'C:\Users\pfft\OneDrive\Рабочий стол\БИ\Python\2430AD.txt', 'r') as text:
+with open(r'.\2430AD.txt', 'r') as text:
     for line in text:
         list_of_a_words += re.findall(exp, line.strip())
 # print(len(list_of_a_words)) 985
@@ -36,7 +38,7 @@ with open(r'C:\Users\pfft\OneDrive\Рабочий стол\БИ\Python\2430AD.tx
 # 4)
 exp = re.compile(r'[A-Z][\w\s\,\:\;]*\!')
 exclamations = []
-with open(r'C:\Users\pfft\OneDrive\Рабочий стол\БИ\Python\2430AD.txt', 'r') as text:
+with open(r'.\2430AD.txt', 'r') as text:
     for line in text:
         exclamations += re.findall(exp, line.strip())
 # print(exclamations) ['Yes!', 'Literally!', 'There was once a time!', 'Centuries ago!', 'Think, Cranwitz!', 'If we succeed!']
@@ -45,7 +47,7 @@ with open(r'C:\Users\pfft\OneDrive\Рабочий стол\БИ\Python\2430AD.tx
 # 5)
 exp = re.compile(r'\w+')
 all_words = []
-with open(r'C:\Users\pfft\OneDrive\Рабочий стол\БИ\Python\2430AD.txt', 'r') as text:
+with open(r'.\2430AD.txt', 'r') as text:
     for line in text:
         all_words += re.findall(exp, line.strip())
 all_uniq_words = set(all_words)
@@ -59,12 +61,8 @@ for i in range(1, 21):
         else:
             continue
 for key in dictionary_of_len_in_uniq_words.keys():
-    dictionary_of_len_in_uniq_words[key] = dictionary_of_len_in_uniq_words[key] * 100 / lent
-import pandas as pd
+    dictionary_of_len_in_uniq_words[key] = dictionary_of_len_in_uniq_words[key] * 100 / len(all_uniq_words)
 
 df = pd.DataFrame(list(dictionary_of_len_in_uniq_words.items()), columns=['Length of word', 'Percent %'])
-import seaborn as sns
-import matplotlib.pyplot as plt
-
 plot = sns.barplot(x='Length of word', y='Percent %', data=df)
 plot.set_ylim(0, max(df['Percent %'] + 2))
