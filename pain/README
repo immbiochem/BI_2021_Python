@@ -1,0 +1,65 @@
+## PAIN PROJECT
+You have to make some work for activation pain.py.
+Clone the repository with git clone https://github.com/krglkvrmn/Virtual_environment_research.git
+### Step 1. Virtual environment.
+This project will require some additional packages and interpreters to be installed. 
+To prevent version conflicts, you need to create a virtual environment where the corresponding package versions will be installed. 
+There are several ways to accomplish this:
+* It must be said right away that you need Python 3.9 or higher to run the file. 
+  You can install it directly on your computer https://python-scripts.com/install-python , or install it directly in virtual environments. 
+  To be used in PyCharm, Python 3.9 must be installed on your computer (but not necessarily used as the main interpreter).
+1) You can use an integrated development environment - IDE like PyCharm. 
+   If this is your first time starting PyCharm, you will be prompted to create a project. 
+   Select the New environment using tab. Select the localization of the new virtual environment. 
+   Install Python 3.9 as an interpreter.
+   Create a new project and load the packages from requirements.
+   
+2) Venv can be used to create a virtual environment. 
+   You can create virtual environment (VE) using command in terminal "python3.9 -m venv your_name_for_ve", then you should activate your VE: "source your_name_for_ve/bin/activate" in Linux or "your_name_for_ve\Scripts\activate" in Windows.
+   
+3) If you have Anaconda installed you can use it. Open Anaconda Prompt. Create a virtual environment with the command "conda create -n name_of_ve python = 3.9". 
+   Activate the virtual environment with the "conda activate name_of_ve" command. You can also use Anaconda Navigator to create a virtual environment https://proglib.io/p/kak-sozdat-virtualnoe-okruzhenie-v-python-i-perestat-dumat-o-zavisimostyah-2020-03-10. 
+
+### Step 2. Loading packages. 
+
+You can use several approaches. The most simple: download all packages from requirements.txt at once.
+Use these commands while in the virtual environment (i.e. after its activation).
+* For Linux / macOS use one of the following commands:
+python -m pip freeze > requirements.txt
+python -m pip install -r requirements.txt
+* For Windows, use one of the following commands:
+py -m pip freeze > requirements.txt
+py -m pip install -r requirements.txt
+  
+* For PyCharm, these commands can be entered directly into the console.  
+
+### Step 3. Pain.py activation.
+
+You can activate the pain.py script with the "python3.9 pain.py" command for venv. 
+To activate the conda in a virtual environment, use the "python pain.py" command.
+For PyCharm, just click Run and select pain.py.
+
+
+
+#### My problems with instalation:
+* In PyCharm I can't install scanpy:
+ERROR: Cannot install scanpy==0.2.3.4, scanpy==0.2.3.5, scanpy==0.2.4, scanpy==0.2.5, scanpy==0.2.6, scanpy==0.2.7, scanpy==0.2.8, scanpy==0.2.9, scanpy==0.2.9.1, scanpy==1.0.1, scanpy==1.0.3, scanpy==1.2.2, scanpy==1.3.3, scanpy==1.3.7, scanpy==1.3.8, scanpy==1.4, scanpy==1.4.1, scanpy==1.4.2, scanpy==1.4.3, scanpy==1.4.4, scanpy==1.4.4.post1, scanpy==1.4.5.1, scanpy==1.4.5.post2, scanpy==1.4.5.post3, scanpy==1.4.6, scanpy==1.5.0, scanpy==1.5.1, scanpy==1.6.0, scanpy==1.6.1, scanpy==1.7.0, scanpy==1.7.1, scanpy==1.7.2, scanpy==1.8.0, scanpy==1.8.1 and scanpy==1.8.2 because these package versions have conflicting dependencies.
+  
+* On my Linux (Ubuntu), I used a conduit to create a virtual environment. After installing all packages, an error occurs when the program starts: [INFO] [Logger] Record log in /home/a1/.kivy/logs/kivy_21-11-01_47.txt
+[INFO] [Kivy] v2.0.0
+[INFO] [Kivy] Installed at "/home/a1/anaconda3/envs/py39/bin/myvenv/lib/python3.9/site-packages/kivy/__init__.py"
+[INFO] [Python] v3.9.7 (default, Sep 16 2021, 13:09:58)
+[GCC 7.5.0]
+[INFO] [Python] Interpreter at "/home/a1/anaconda3/envs/py39/bin/myvenv/bin/python3.9"
+[INFO] [Factory] 186 symbols loaded
+[INFO] [Image] Providers: img_tex, img_dds, img_sdl2, img_pil (img_ffpyplayer ignored)
+[INFO] [Text] Provider: sdl2
+Invalid instruction (memory stack flushed to disk).
+  
+* Therefore, I tried on another computer (Windows 10) through Anaconda promt on Windows to create a virtual environment and add Python 3.9 to it. 
+  But there conda does not see the google-api-client and opencv packages, although I go to Anaconda.org and find them, but conda install does not work.
+  
+* I tried with virtualenv. I created a virtual environment virtualenv -p / usr / bin / python3.9 name. 
+  I downloaded the packages there, ran the code and got the same error again as with venv.
+  
+Bottom line: I tried to run the file on different platforms, but as a result, new version conflicts constantly appeared.
