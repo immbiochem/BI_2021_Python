@@ -118,9 +118,10 @@ plt.grid()
 
 n = 1000
 x, y = np.zeros(n), np.zeros(n)
-act = [1, -1]
+act = [(1, 0), (-1, 0), (0, 1), (0, -1)]
 for i in range(1, n):
-    x[i], y[i] = x[i-1] + random.choice(act), y[i-1] + random.choice(act)
+    x_add, y_add = random.choice(act)
+    x[i], y[i] = x[i-1] + x_add, y[i-1] + y_add
 param = max([max(abs(x)), max(abs(y))]) + 5
 fig_dims = (10, 8)
 fig, axes = plt.subplots(figsize=fig_dims)
