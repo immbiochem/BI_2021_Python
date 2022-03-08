@@ -1,0 +1,10 @@
+## Simple API for GitHub.
+
+The following functions have been implemented:
+1) get_user_info(username) - returns a dictionary with information about the user. Keys: name (which is NOT a nickname), organization, location, number of subscribers, number of repositories.
+
+2) get_user_repositories(username) - returns a list of the user's public repositories as a list of dictionaries. Keys: user, repository name, language.
+
+3) list_repository_contents(username, repository, repository_path) - returns a list of files and folders in username's repository repository at repository_path. This is essentially the same as using "ls repository_path" locally, we just list the files in the specified path.
+
+4) download_file(username, repository, remote_file_path, local_file_path) - downloading a file that has the remote_file_path path in the repository and saving it locally along the local_file_path path. When trying to download a folder, you can throw an exception or download the entire folder.
