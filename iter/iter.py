@@ -4,7 +4,7 @@
 # In[ ]:
 
 import numpy as np
-
+import random
 
 def gen_fasta(path: str):
     body = []
@@ -41,7 +41,7 @@ class Generator_Rex:
 
     def change(self, line):
         line_transform = np.array(list(line))
-        num = int(len(line) * 0.1)
+        num = int(len(line) * (random.randint(1,3)*0.1))
         line_transform[tuple(np.random.randint(len(line), size=num)),] = np.random.choice(line_transform, num)
         return ''.join(line_transform)
 
