@@ -1,7 +1,8 @@
 ## Homework on "Decorators"
 
 The folder contains code with executable examples, abstract and homework examples, and a Jupyter-Notebook with function examples.
-Additional package downloads are not required.
+You need to install one additional package (requirements.txt ) for the demonstration.
+The functions themselves do not require third party packages to work.
 
 The following decorators are provided:
 - time_this
