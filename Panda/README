@@ -1,0 +1,7 @@
+## These are explanations for the "Pandas" task.
+1) The folder contains all the data used in the execution of the task;
+2) Almost all data, with the exception of imm.xlsx, is taken from the public repository of the Bioinformatics Institute's Python course;
+3) The imm.xlsx data is taken from the article:
+https://www.sciencedirect.com/science/article/pii/S1074761311005152#mmc2
+4) The imm.xlsx data was converted by cutting one exel sheet and forming a new document from one sheet;
+5) Python-Notebook provided as a task; the code from the notebook is duplicated in a separate file.
