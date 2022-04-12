@@ -21,7 +21,7 @@ def time_this(func):
 
 
 # Demonstration 1
-if __name__ == __main__:
+if __name__ == '__main__':
     @time_this
     def some_function(a, b, c, d, e=0, f=2, g='3'):
         time.sleep(a)
@@ -54,7 +54,7 @@ def function_logging(func):
 
 
 # Demonstration 2
-if __name__ == __main__:
+if __name__ == '__main__':
     @function_logging
     def func3(a, b, c, d=4):
         return [a + b * c] * d
@@ -77,7 +77,7 @@ def russian_roulette_decorator(probability=0.2, return_value="(/¯◡ ‿ ◡)/�
 
 
 # Demonstration 3
-if __name__ == __main__:
+if __name__ == '__main__':
     @russian_roulette_decorator(probability=0.2, return_value="Ooops, your output has been stolen!")
     def make_request(url):
         return requests.get(url)
