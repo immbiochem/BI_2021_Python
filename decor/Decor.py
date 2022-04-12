@@ -32,7 +32,6 @@ if __name__ == '__main__':
         time.sleep(f)
         return g
 
-
     some_function(1, 2, 3, 4, e=5, f=6, g='99999')
 
 
@@ -59,7 +58,6 @@ if __name__ == '__main__':
     def func3(a, b, c, d=4):
         return [a + b * c] * d
 
-
     print(func3(1, 2, c=3, d=2), end='\n\n')
 
 
@@ -81,7 +79,6 @@ if __name__ == '__main__':
     @russian_roulette_decorator(probability=0.2, return_value="Ooops, your output has been stolen!")
     def make_request(url):
         return requests.get(url)
-
 
     for _ in range(10):
         print(make_request('https://google.com'))
