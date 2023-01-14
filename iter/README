@@ -1,0 +1,13 @@
+## Iterator assignment
+
+The following objects have been implemented:
+1) gen_fasta(path) - generator function, takes the path to the fast file as input and outputs sequence id pairs in turn
+
+2) Class GeneratorRex - a class that reads sequences from the file with minor changes. 
+If the file is over, then the iteration continues from its beginning. When returning each successive sequence, the class changes it slightly. The class contains the following methods:
+   * replacement - replace one or more letters in the given sequence
+   * delit - remove a letter or piece in the given sequence
+   * inser - insert one or more letters into the given sequence
+   * chance - apply replacement, delit or inser with some probability to the passed sequence
+
+The folder also contains a .fasta file for testing and a Jupyter-notebook with a class demo.
